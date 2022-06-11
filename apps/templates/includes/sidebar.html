@@ -1,0 +1,35 @@
+
+        <div class="az-content-left az-content-left-components">
+          <div class="component-item">
+           <label>Tugas Kuliah</label>
+            <nav class="nav flex-column">
+              <a href="{% url 'tugas_list' %}"  class="nav-link {% if 'list-tugas'  in segment %} active {% endif %}">List Tugas</a>
+              <a href="{% url 'tugas_create' %}"  class="nav-link {% if 'create-tugas' in segment %} active {% endif %}">Buat Tugas Baru</a>
+            </nav>
+          <label>Matakuliah</label>
+            <nav class="nav flex-column">
+              <a href="{% url 'mk_list' %}"  class="nav-link {% if 'list-mk'  in segment %} active {% endif %}">List Matakuliah</a>
+              <a href="{% url 'mk_create' %}"  class="nav-link {% if 'create-mk' in segment %} active {% endif %}">Buat Matakuliah Baru</a>
+            </nav>
+{#            <label>UI Elements</label>#}
+{#            <nav class="nav flex-column">#}
+{#              <a href="elem-buttons.html"  class="nav-link {% if 'elem-butt'  in segment %} active {% endif %}">Buttons</a>#}
+{#              <a href="elem-dropdown.html" class="nav-link {% if 'elem-drop'  in segment %} active {% endif %}">Dropdown</a>#}
+{#              <a href="elem-icons.html"    class="nav-link {% if 'elem-icons' in segment %} active {% endif %}">Icons</a>#}
+{#            </nav>#}
+{#            <label>Forms</label>#}
+{#            <nav class="nav flex-column">#}
+{#              <a href="form-elements.html" class="nav-link {% if 'form-elements' in segment %} active {% endif %}">Form Elements</a>#}
+{#            </nav>#}
+{#            <label>Charts</label>#}
+{#            <nav class="nav flex-column">#}
+{#              <a href="chart-chartjs.html" class="nav-link {% if 'chartjs' in segment %} active {% endif %}">ChartJS</a>#}
+{#            </nav>#}
+{##}
+{#            <label>Tables</label>#}
+{#            <nav class="nav flex-column">#}
+{#              <a href="table-basic.html" class="nav-link {% if 'table-basic' in segment %} active {% endif %}">Basic Tables</a>#}
+{#            </nav>#}
+          </div><!-- component-item -->
+
+        </div><!-- az-content-left -->

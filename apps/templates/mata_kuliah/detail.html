@@ -1,0 +1,63 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %}
+
+<!-- Page CSS Plugins goes HERE  -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+        <div class="container">
+
+            {% include 'includes/sidebar.html' %}
+
+            <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                <div class="az-content-breadcrumb">
+                    <span><a href="{% url 'home' %}">Home</a></span>
+                    <span><a href="{% url 'mk_list' %}">Mata Kuliah</a></span>
+                    <span>Detail Mata Kuliah</span>
+                </div>
+                <h2 class="az-content-title">Detail Mata Kuliah</h2>
+                {% load crispy_forms_tags %}
+
+                <div class="text">
+                    <p class="font-weight-bold">
+                        Nama Mata Kuliah:
+                    </p>
+                    <p>
+                        {{ data.nama }}
+                    </p>
+                    <p class="font-weight-bold">
+                        Nama Dosen:
+                    </p>
+                    <p>
+                        {{ data.dosen }}
+                    </p>
+                </div><!-- table-responsive -->
+                <div class="row az-content-body">
+                    <form action="{% url 'mk_delete' mk_id=data.id %}" method="post" class="form-group">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-az-danger btn btn-danger">Delete</button>
+                    </form>
+
+                    <form action="{% url 'mk_edit' mk_id=data.id %}" method="get" class="form-group">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-az-primary btn btn-danger">Edit</button>
+                    </form>
+                </div>
+
+            </div><!-- az-content-body -->
+        </div><!-- container -->
+    </div><!-- az-content -->
+
+{% endblock content %}
+
+<!-- Page JS Plugins goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

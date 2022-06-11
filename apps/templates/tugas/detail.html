@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html>{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %}
+
+<!-- Page CSS Plugins goes HERE  -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+        <div class="container">
+
+            {% include 'includes/sidebar.html' %}
+
+            <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                <div class="az-content-breadcrumb">
+                    <span><a href="{% url 'home' %}">Home</a></span>
+                    <span><a href="{% url 'tugas_list' %}">Tugas Kuliah</a></span>
+                    <span>Detail Tugas Kuliah</span>
+                </div>
+                <h2 class="az-content-title">Detail Tugas Kuliah</h2>
+                {% load crispy_forms_tags %}
+
+                <div class="text">
+                    <p class="font-weight-bold">
+                        Nama Tugas:
+                    </p>
+                    <p>
+                        {{ data.nama }}
+                    </p>
+                    <p class="font-weight-bold">
+                        Status Tugas:
+                    </p>
+                    <p>
+                        {{ data.status }}
+                    </p>
+                     <p class="font-weight-bold">
+                        Tanggal Kumpul:
+                    </p>
+                    <p>
+                        {{ data.kumpul }}
+                    </p>
+                    <p class="font-weight-bold">
+                        Matakuliah:
+                    </p>
+                    <p>
+                        {{ data.matakuliah.nama }}
+                    </p>
+                    <p class="font-weight-bold">
+                        Deskripsi:
+                    </p>
+                    <p>
+                        {{ data.desc }}
+                    </p>
+                </div><!-- table-responsive -->
+                <div class="row az-content-body">
+                    <form action="{% url 'tugas_delete' data.id %}" method="post" class="form-group">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-az-danger btn btn-danger">Delete</button>
+                    </form>
+
+                    <form action="{% url 'tugas_edit' data.id %}" method="get" class="form-group">
+                        {% csrf_token %}
+                        <button type="submit" class="btn-az-primary btn btn-danger">Edit</button>
+                    </form>
+
+                    <form action="{% url 'tugas_done' data.id %}" method="post" class="form-group">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-success">Mark as done</button>
+                    </form>
+                </div>
+
+            </div><!-- az-content-body -->
+        </div><!-- container -->
+    </div><!-- az-content -->
+
+{% endblock content %}
+
+<!-- Page JS Plugins goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

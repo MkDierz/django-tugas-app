@@ -1,0 +1,86 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %}
+
+<!-- Page CSS Plugins goes HERE  -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+        <div class="container">
+
+            {% include 'includes/sidebar.html' %}
+
+            <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                <div class="az-content-breadcrumb">
+                    <span><a href="{% url 'home' %}">Home</a></span>
+                    <span><a href="{% url 'tugas_list' %}">Tugas Kuliah</a></span>
+                </div>
+                <h2 class="az-content-title">List Tugas</h2>
+
+                <div class="az-content-label mg-b-5"><a href="{% url 'tugas_create' %}" class="btn btn-az-primary ">Input
+                    Tugas Baru</a></div>
+                <p class="mg-b-20"></p>
+                <div class="table-responsive">
+                    <table class="table table-hover mg-b-0">
+                        <thead>
+                        <tr>
+                            <th>Status</th>
+                            <th>Nama Tugas</th>
+                            <th>Kumpul</th>
+                            <th>Mata kuliah</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for d in data %}
+                            <tr>
+                                <td>
+                                    <form action="{% url 'tugas_done' d.id %}" method="post" class="form-group">
+                                        {% csrf_token %}
+                                        <input type="text" name="goto" value="tugas_list" style="display: none">
+                                        <button type="submit" class="btn btn-sm p-0">
+                                            {% if d.status %}
+                                                <i class="fa-check-circle fas fa-3x text-success"></i>
+                                            {% else %}
+                                                <i class="fa-exclamation-circle fas fa-3x text-danger"></i>
+                                            {% endif %}
+                                        </button>
+                                    </form>
+
+                                </td>
+                                <td>
+                                    <a href="{% url 'tugas_get' d.id %}" class="btn p-0">
+                                        {{ d.nama }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'tugas_get' d.id %}" class="btn p-0">
+                                        {{ d.kumpul }}
+                                    </a>
+                                </td>
+                                <td>
+                                    <a href="{% url 'tugas_get' tugas_id=d.id %}" class="btn p-0">
+                                        {{ d.matakuliah.nama }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div><!-- table-responsive -->
+
+            </div><!-- az-content-body -->
+        </div><!-- container -->
+    </div><!-- az-content -->
+
+{% endblock content %}
+
+<!-- Page JS Plugins goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

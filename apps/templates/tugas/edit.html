@@ -1,0 +1,52 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Tables {% endblock %}
+
+<!-- Page CSS Plugins goes HERE  -->
+{% block plugin_stylesheets %}{% endblock plugin_stylesheets %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+    <div class="az-content pd-y-20 pd-lg-y-30 pd-xl-y-40">
+        <div class="container">
+
+            {% include 'includes/sidebar.html' %}
+
+            <div class="az-content-body pd-lg-l-40 d-flex flex-column">
+                <div class="az-content-breadcrumb">
+                     <span><a href="{% url 'home' %}">Home</a></span>
+                    <span><a href="{% url 'tugas_list' %}">Tugas Kuliah</a></span>
+                    <span>Edit Tugas Kuliah</span>
+                </div>
+                <h2 class="az-content-title">Edit Tugas Kuliah</h2>
+
+                {#                <div class="az-content-label mg-b-5">Hoverable Rows Table</div>#}
+                {#                <p class="mg-b-20">To enable a hover state on table rows.</p>#}
+                {% load crispy_forms_tags %}
+
+                <form method="POST" enctype="multipart/form-data">
+
+                    <!-- Security token -->
+                    {% csrf_token %}
+
+                    <!-- Using the formset -->
+                    {{ form|crispy }}
+
+                    <input type="submit" value="Submit">
+                </form>
+
+            </div><!-- az-content-body -->
+        </div><!-- container -->
+    </div><!-- az-content -->
+
+{% endblock content %}
+
+<!-- Page JS Plugins goes HERE  -->
+{% block plugin_javascripts %}{% endblock plugin_javascripts %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
