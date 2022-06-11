@@ -89,11 +89,16 @@ def mark_as_done(request, tugas_id):
     tugas = Tugas.objects.get(id=tugas_id)
     tugas.status = not tugas.status
     tugas.save()
-    if request.POST["goto"]:
+    try:
         dest = request.POST["goto"]
         return HttpResponseRedirect(redirect_to=reverse(dest))
-    else:
+    except:
         return HttpResponseRedirect(redirect_to=reverse('tugas_get', kwargs={'tugas_id': tugas_id}))
+    #
+    # if request.POST["goto"]:
+    #     dest = request.POST["goto"]
+    #     return HttpResponseRedirect(redirect_to=reverse(dest))
+    # else:
 
 
 @login_required(login_url="/login/")
