@@ -11,26 +11,22 @@ from django.urls import reverse
 from django.shortcuts import get_object_or_404
 from .models import Tugas, MataKuliah
 from .forms import MatkuliahForm, TugasForm
-from django.db.models import Count, Case, Q
-import requests
+from django.db.models import Count
 
 
 # @login_required(login_url="/login/")
 def index(request):
-    # context = {
-    #     "head": "dashboard",
-    #     "segment": "index",
-    #     "tugas": Tugas.objects.all(),
-    #     "mk": MataKuliah.objects.all().annotate(count=Count('tugas')).annotate(
-    #         done=Count('tugas__status', filter=0, distinct=True
-    #                    ))
-    # }
-    #
-    # html_template = loader.get_template("home/index.html")
-    # return HttpResponse(html_template.render(context, request))
-    r = requests.get('https://httpbin.org/status/418')
-    print(r.text)
-    return HttpResponse('<pre>' + r.text + '</pre>')
+    context = {
+        "head": "dashboard",
+        "segment": "index",
+        "tugas": Tugas.objects.all(),
+        "mk": MataKuliah.objects.all().annotate(count=Count('tugas')).annotate(
+            done=Count('tugas__status', filter=0, distinct=True)
+        )
+    }
+
+    html_template = loader.get_template("home/index.html")
+    return HttpResponse(html_template.render(context, request))
 
 
 """TUGAS"""
