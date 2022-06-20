@@ -20,9 +20,9 @@ def index(request):
         "head": "dashboard",
         "segment": "index",
         "tugas": Tugas.objects.all(),
-        "mk": MataKuliah.objects.all().annotate(count=Count('tugas')).annotate(
-            done=Count('tugas__status', filter=0, distinct=True)
-        )
+        "mk": MataKuliah.objects.all()
+        .annotate(count=Count("tugas"))
+        .annotate(done=Count("tugas__status", filter=0, distinct=True)),
     }
 
     html_template = loader.get_template("home/index.html")
@@ -35,7 +35,7 @@ def index(request):
 @login_required(login_url="/login/")
 def list_tugas(request):
     context = {
-        "head": 'tugas',
+        "head": "tugas",
         "segment": "list-tugas",
         "data": Tugas.objects.all(),
     }
@@ -50,9 +50,9 @@ def create_tugas(request):
     if form_tugas.is_valid():
         # save the form data to model
         form_tugas.save()
-        return HttpResponseRedirect(redirect_to=reverse('tugas_list'))
+        return HttpResponseRedirect(redirect_to=reverse("tugas_list"))
     context = {
-        "head": 'tugas',
+        "head": "tugas",
         "segment": "create-tugas",
         "form_tugas": form_tugas,
     }
@@ -64,11 +64,7 @@ def create_tugas(request):
 @login_required(login_url="/login/")
 def get_tugas(request, tugas_id):
     data = Tugas.objects.get(id=tugas_id)
-    context = {
-        "head": 'tugas',
-        "segment": "detail-tugas",
-        "data": data
-    }
+    context = {"head": "tugas", "segment": "detail-tugas", "data": data}
     html_template = loader.get_template("tugas/detail.html")
     return HttpResponse(html_template.render(context, request))
 
@@ -81,10 +77,10 @@ def delete_tugas(request, tugas_id):
         obj.delete()
         # after deleting redirect to
         # home page
-        return HttpResponseRedirect(redirect_to=reverse('tugas_list'))
+        return HttpResponseRedirect(redirect_to=reverse("tugas_list"))
 
 
-@login_required(login_url='/login/')
+@login_required(login_url="/login/")
 def mark_as_done(request, tugas_id):
     tugas = Tugas.objects.get(id=tugas_id)
     tugas.status = not tugas.status
@@ -93,7 +89,9 @@ def mark_as_done(request, tugas_id):
         dest = request.POST["goto"]
         return HttpResponseRedirect(redirect_to=reverse(dest))
     except:
-        return HttpResponseRedirect(redirect_to=reverse('tugas_get', kwargs={'tugas_id': tugas_id}))
+        return HttpResponseRedirect(
+            redirect_to=reverse("tugas_get", kwargs={"tugas_id": tugas_id})
+        )
     #
     # if request.POST["goto"]:
     #     dest = request.POST["goto"]
@@ -115,7 +113,9 @@ def edit_tugas(request, tugas_id=None):
         form = TugasForm(request.POST or None, instance=obj)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(redirect_to=reverse('tugas_get', kwargs={'tugas_id': tugas_id}))
+            return HttpResponseRedirect(
+                redirect_to=reverse("tugas_get", kwargs={"tugas_id": tugas_id})
+            )
 
     context = {
         "page": "tugas",
@@ -137,12 +137,8 @@ def create_mk(request):
     if form.is_valid():
         # save the form data to model
         form.save()
-        return HttpResponseRedirect('/mk')
-    context = {
-        "head": 'mk',
-        "segment": "create-mk",
-        "form": form
-    }
+        return HttpResponseRedirect("/mk")
+    context = {"head": "mk", "segment": "create-mk", "form": form}
 
     html_template = loader.get_template("mata_kuliah/create.html")
     return HttpResponse(html_template.render(context, request))
@@ -152,7 +148,7 @@ def create_mk(request):
 def get_mk(request, mk_id):
     data = MataKuliah.objects.get(id=mk_id)
     context = {
-        "head": 'mk',
+        "head": "mk",
         "segment": "list-mk",
         "data": data,
     }
@@ -168,7 +164,7 @@ def delete_mk(request, mk_id):
         obj.delete()
         # after deleting redirect to
         # home page
-        return HttpResponseRedirect(redirect_to=reverse('mk_list'))
+        return HttpResponseRedirect(redirect_to=reverse("mk_list"))
 
 
 @login_required(login_url="/login/")
@@ -185,7 +181,9 @@ def edit_mk(request, mk_id=None):
         form = MatkuliahForm(request.POST or None, instance=obj)
         if form.is_valid():
             form.save()
-            return HttpResponseRedirect(redirect_to=reverse('mk_get', kwargs={'mk_id': mk_id}))
+            return HttpResponseRedirect(
+                redirect_to=reverse("mk_get", kwargs={"mk_id": mk_id})
+            )
 
     context = {
         "segment": "edit-mk",
@@ -201,7 +199,7 @@ def edit_mk(request, mk_id=None):
 def list_mk(request):
     data = MataKuliah.objects.all()
     context = {
-        "head": 'mk',
+        "head": "mk",
         "segment": "list-mk",
         "data": data,
     }
@@ -248,7 +246,6 @@ def pages(request):
         except:
             html_template = loader.get_template("home/page-500.html")
             return HttpResponse(html_template.render(context, request))
-
 
     except:
         html_template = loader.get_template("home/page-500.html")

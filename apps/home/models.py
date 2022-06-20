@@ -4,7 +4,6 @@ Copyright (c) 2019 - present AppSeed.us
 """
 
 from django.db import models
-from django.contrib.auth.models import User
 
 
 # Create your models here.
@@ -13,6 +12,13 @@ class MataKuliah(models.Model):
     dosen = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Mata Kuliah"
+        verbose_name_plural = "Daftar mata Kuliah"
+
+    def __str__(self):
+        return self.nama
 
 
 class Tugas(models.Model):
@@ -23,3 +29,10 @@ class Tugas(models.Model):
     desc = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = "Tugas"
+        verbose_name_plural = "Daftar Tugas"
+
+    def __str__(self):
+        return self.nama
