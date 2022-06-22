@@ -39,8 +39,6 @@ def register_user(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             profile = form.save(commit=False)
-            profile.is_staff = True
-            profile.is_superuser = True
             profile.save()
             username = form.cleaned_data.get("username")
             raw_password = form.cleaned_data.get("password1")
